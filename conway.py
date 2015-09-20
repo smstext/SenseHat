@@ -56,9 +56,9 @@ class GameOfLife(object):
 
     def get_cell_color(self, x, y):
         cell = (x, y)
-        red = (255, 0, 0)
+        green = (0, 255, 0)
         black = (0, 0, 0)
-        return red if cell in self.live_cells else black
+        return green if cell in self.live_cells else black
 
     def update(self):
         width, height = self.size
