@@ -3,17 +3,14 @@ import urllib2
 import json
 import time
 
+global lastID
 sense = SenseHat()
 sense.set_rotation(180)
-
-
-global lastID
 lastID = 0
 refresh = 10    #refresh time in secs
 urlRoot = "http://api.thingspeak.com/channels/1417/"
-pixels=[]
+pixels = []
 maxPixels = 64
-
 
 namesToRGB = {'red': [0xFF, 0, 0],
                 'green': [0, 0x80, 0],
@@ -43,9 +40,6 @@ def getJSON(url):
 def parseColour(feed):
     global lastID
     print feed["field1"]
-    for name in namesToRGB.keys():
-        if feedItem["field1"] == name:
-            pixels.insert(0, namesToRGB[name])    #add the colour to the head
     lastID = getEntryID(feed)
     
 #read the last entry_id
@@ -74,19 +68,18 @@ def showColour(c):
     sensehat.show()
 
 L = (255, 255, 0)
-T = name
-
+T = "field1" 
 B = (0, 0, 0)
 
 tree = [
-B, B, B, L, L, B, B, B,
-B, B, T, T, T, T, B, B,
-B, L, T, T, T, T, L, B,
-B, T, T, T, T, T, T, B,
-L, T, T, T, T, T, T, L,
-T, T, T, T, T, T, T, T,
-B, B, B, T, T, B, B, B,
-B, B, B, T, T, B, B, B
+B, B, B, L, B, B, B, B,
+B, B, T, T, T, B, B, B,
+B, L, T, T, T, L, B, B,
+B, T, T, T, T, T, B, B,
+L, T, T, T, T, T, L, B,
+T, T, T, T, T, T, T, B,
+B, B, B, T, B, B, B, B,
+B, B, B, T, B, B, B, B,
 ]
 sense.set_pixels(tree)
 
